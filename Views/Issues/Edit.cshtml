@@ -1,0 +1,66 @@
+﻿@model CourtHouse.Data.ViewModels.VMRealtyContractRealty
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+
+<div class="container-fluid text-right">
+    <form asp-action="Edit">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="row">
+            <div class="col-lg-5">
+                <label asp-for="realtyContract.contractType">نوع العقد</label>
+                <input asp-for="realtyContract.contractType" class="form-control" />
+                <span asp-validation-for="realtyContract.contractType" class="text-danger"></span>
+            </div>
+            <div class=" col-lg-5">
+
+                <label asp-for="realty.id">رقم العقار</label>
+                <input asp-for="realty.id" class="form-control" disabled />
+                <span asp-validation-for="realty.id" class="text-danger"></span>
+            </div>
+            <div class="col-lg-5">
+                <label asp-for="realty.realtyType">نوع العقار</label>
+                <input asp-for="realty.realtyType" class="form-control" />
+                <span asp-validation-for="realty.realtyType" class="text-danger"></span>
+            </div>
+            <div class="col-lg-5">
+                <label asp-for="realty.regionSelect">المحافظة</label>
+
+                <select asp-for="realty.regionSelect" class="form-control" asp-items="@(new SelectList(Model.realty.regionList, "id", "regionName"))">
+                    <option value="-1">--إختر المحافظة--</option>
+                </select>
+                <span asp-validation-for="realty.regionSelect" class="text-danger"></span>
+            </div>
+            <div class="col-lg-5">
+                <label asp-for="realty.area">منطقة العقار</label>
+                <input asp-for="realty.area" class="form-control" />
+                <span asp-validation-for="realty.area" class="text-danger"></span>
+            </div>
+            <div class="col-lg-5">
+                <label asp-for="realty.theFinancialValue">القيمة التقديرية للعقار</label>
+                <input asp-for="realty.theFinancialValue" class="form-control" />
+                <span asp-validation-for="realty.theFinancialValue" class="text-danger"></span>
+            </div>
+            <div class="col-lg-5">
+                <label asp-for="realty.adress">العنوان</label>
+                <input asp-for="realty.adress" class="form-control" />
+                <span asp-validation-for="realty.adress" class="text-danger"></span>
+            </div>
+            <div class="col-lg-5">
+                <label asp-for="realty.info">معلومات</label>
+                <input asp-for="realty.info" class="form-control" />
+                <span asp-validation-for="realty.info" class="text-danger"></span>
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-12">
+                <input asp-for="realty.id" style="display:none;" />
+                <input asp-for="realtyContract.id" style="display:none;" />
+                <input type="submit" value="Edit" class="btn btn-primary" />
+            </div>
+        </div>
+    </form>
+</div>

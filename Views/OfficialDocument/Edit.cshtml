@@ -1,0 +1,40 @@
+﻿@model CourtHouse.Data.ViewModels.VMOfficialDocument
+
+<div class="modal fade" id="ShowPopup">
+    <div class="modal-dialog modal-xl">
+        <form asp-action="Edit" enctype="multipart/form-data">
+            <div class="modal-content">
+                <div class="modal-header">
+                    @Model.imageType
+                    <hr />
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-4">
+                            <label asp-for="imageType" class="control-label">نوع المرفق</label>
+                            <input asp-for="imageType" class="form-control" />
+                            <span asp-validation-for="imageType" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <img src="~/OfficialDocument/@Model.image" class="img-thumbnail" style="width:400px; height:400px" />
+                        </div>
+                    </div>
+                    <h4 style="color:red">على الصورة أن لايتجاوز حجمها 200 كيلوبايت</h4>
+                    <div class="row">
+                        <div class="col-12">
+                            <label asp-for="imageUrl" class="control-label">اختيار المرفق</label>
+                            <input type="file" accept="image/jpeg, image/jpg" asp-for="imageUrl" class="form-control" />
+                            <span asp-validation-for="imageUrl" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <input asp-for="realtyContract.id" style="display:none" class="form-control" />                    
+                    <input type="submit" value="تحديث" class="btn btn-primary" />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

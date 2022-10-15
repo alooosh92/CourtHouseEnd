@@ -1,0 +1,53 @@
+﻿@model CourtHouse.Data.ViewModels.VMFees
+
+<div class="modal fade" id="EditeFees">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                @Model.person.firstName @Model.person.lastName
+                <hr />
+            </div>
+            <form asp-action="Edit">
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <input type="hidden" asp-for="id" />
+                            <input type="hidden" asp-for="realtyContract.id" />
+                            <div class="col-3">
+                                <label asp-for="TheFinancialValue" class="control-label">قيمة الايصال</label>
+                                <input asp-for="TheFinancialValue" class="form-control" />
+                                <span asp-validation-for="TheFinancialValue" class="text-danger"></span>
+                            </div>
+                            <div class="col-3">
+                                <label asp-for="reasonOfPayment" class="control-label">سبب الدفع</label>
+                                <input asp-for="reasonOfPayment" class="form-control" />
+                                <span asp-validation-for="reasonOfPayment" class="text-danger"></span>
+                            </div>
+                            <div class="col-3">
+                                <label asp-for="financialNoticeNumber" class="control-label">رقم ايصال الدفع</label>
+                                <input asp-for="financialNoticeNumber" class="form-control" />
+                                <span asp-validation-for="financialNoticeNumber" class="text-danger"></span>
+                            </div>
+                            <div class="col-3">
+                                <label asp-for="isPayment" class="control-label">مدفوع</label>
+                                <input asp-for="isPayment" class="form-control" />
+                                <span asp-validation-for="isPayment" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <img src="~/FeesImages/@Model.paymentImage" class="img-thumbnail" />
+                            </div>
+                        </div>                       
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+

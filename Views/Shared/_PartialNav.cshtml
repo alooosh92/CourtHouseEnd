@@ -1,0 +1,47 @@
+﻿@inject Microsoft.AspNetCore.Identity.UserManager<User> userManager
+<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+    <div class="container">
+        <img class=" navbar-toggler-icon h-25" src="~/img/icon.jpg" />
+        <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index" style="font-size:1">القصر العدلي</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+        </button>
+        <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+            <ul class="navbar-nav flex-grow-1">
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">الصفحة الرئيسية</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Issues" asp-action="Index">القضايا</a>
+                </li>
+               
+                @if (User.IsInRole("DataEntry"))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Realty" asp-action="Index">انشاء عقار</a>
+                    </li>
+                }
+                @if (User.IsInRole("Admin"))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="WayToCommunicate" asp-action="Index">طرق التواصل</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Employee" asp-action="Index">موظفين</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Employee" asp-action="RegionInfo">تقييم عمل المحافظات</a>
+                    </li>
+                }
+                @if (User.IsInRole("Admin") || User.IsInRole("LocalAdmin"))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Employee" asp-action="EmployeeInfo">تقييم الموظفين</a>
+                    </li>
+                }
+            </ul>
+                <partial name="_LoginPartial" />
+            </div>
+        </div>
+    </nav>
+

@@ -1,0 +1,344 @@
+﻿@model CourtHouse.Data.ViewModels.VMIssues
+@inject Microsoft.AspNetCore.Identity.UserManager<User> userManager
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+<div id="modalshow"></div>
+<div class="container text-right">
+    <div class="row">
+        <h2>@ViewBag.MessageErorr</h2>
+        <div class="col-6">@Html.Raw(ViewData["ContractState"])</div>
+        <div class="col-6">
+            @if (Model.realtyContract.isFinance == false)
+            {
+                <a asp-action="Edit" asp-route-id="@Model.realtyContract.id" asp-route-check="@ViewData["BtnCheck"]" class="btn btn-info">@ViewData["BtnText"]</a>
+            }
+            @if (Model.realtyContract.isJudge == false && User.IsInRole("Judge"))
+            {
+                <a data-toggle="ajax-modal" data-target="ShowPopup" data-url="@Url.Action("AddJudgment", "Issues", new { id = Model.realtyContract.id })" class="btn btn-info">إضافة الحكم</a>
+            }
+            @if (User.IsInRole("Admin") && Model.realtyContract.isChecked == true)
+            {
+                <a asp-action="Edit" asp-route-id="@Model.realtyContract.id" asp-route-check="@ViewData["AdminBtnCheck"]" class="btn btn-info">@ViewData["AdminBtnText"]</a>
+                <a data-toggle="ajax-modal" data-target="ShowPopup" data-url="@Url.Action("ShowRealtyContractNote", "Issues", new { id = Model.realtyContract.id })" class="btn btn-info">عرض المعلومات</a>
+            }
+            @if (User.IsInRole("Employee"))
+            {
+                <a data-toggle="ajax-modal" data-target="ShowPopup" data-url="@Url.Action("SentMessege", "Issues", new { con = Model.realtyContract.id })" class="btn btn-info">ارسال رسالة</a>
+            }
+        </div>
+    </div>
+    <div class="row">
+        <h5><span style="color:orangered">@ViewData["info"]</span> </h5>
+    </div>
+    <hr />
+    <div class="row">
+        <table border="1" class="col-12 text-center">
+            <tr>
+                <th>
+                    نوع العقد
+                </th>
+                <td>
+                    @Html.DisplayFor(model => model.realtyContract.contractType)
+                </td>
+                <th>
+                    التاريخ
+                </th>
+                <td>
+                    @Html.DisplayFor(model => model.realtyContract.startDate)
+                </td>
+                <th>
+                    المستخدم
+                </th>
+                <td>
+                    @Html.DisplayFor(model => model.realtyContract.user.UserName)
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    رقم العقار
+                </th>
+                <td>
+                    @Html.DisplayFor(model => model.realtyContract.realty.id)
+                </td>
+                <th>
+                    نوع العقار
+                </th>
+                <td>
+                    @Html.DisplayFor(model => model.realtyContract.realty.realtyType)
+                </td>
+                <th>
+                    القيمة التقديرية
+                </th>
+                <td>
+                    @Html.DisplayFor(model => model.realtyContract.realty.theFinancialValue)
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    محافظة العقار
+                </th>
+                <td>
+                    @Html.DisplayFor(model => model.realtyContract.realty.region.regionName)
+                </td>
+                <th>
+                    المنطقة العقارية
+                </th>
+                <td>
+                    @Html.DisplayFor(model => model.realtyContract.realty.area)
+                </td>
+                <th>
+                    العنوان
+                </th>
+                <td>
+                    @Html.DisplayFor(model => model.realtyContract.realty.adress)
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    ملاحظات
+                </th>
+                <td colspan="5">
+                    @Html.DisplayFor(model => model.realtyContract.realty.info)
+                </td>
+            </tr>
+        </table>
+    </div>       <!--معلومات العقد-->
+    <hr />
+    <div class="row">
+        <div class="col-10">
+            <h2>معلومات االمالكين</h2>
+        </div>
+        <div class="col-2">
+            @if (!User.IsInRole("Employee"))
+            {
+                <a data-toggle="ajax-modal" data-target="ShowPopup" data-url="@Url.Action("AddPerson", "Beneficiary", new { contract = Model.realtyContract.id, type = "مالك" })" class="btn btn-info" style="width:160px;">
+                    إضافة مالك
+                </a>
+            }
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <table border="1" class="text-center col-12">
+            <tr>
+                <th>#</th>
+                <th>الرقم الوطني</th>
+                <th>الاسم</th>
+                <th>الكنية</th>
+                <th>اسم الأب</th>
+                <th>القيمة السهمية</th>
+                <th>طريقة التواصل</th>
+            </tr>
+            @for (int i = 0; i < Model.beneficiary.Count; i++)
+            {
+                @if (Model.beneficiary[i].typePerson == "مالك")
+                {
+                    var col = "";
+                    @if (Model.beneficiary[i].isChecked == true)
+                    {
+                        col = "lightgreen";
+                    }
+                    <tr style="background-color:@col">
+                        <td>
+                            <a asp-action="Details" asp-controller="Beneficiary" asp-route-id="@Model.beneficiary[i].id" style="color: #17a2f8 "><i class="bi bi-eye"></i></a> |
+                            <a asp-action="Edit" asp-controller="Beneficiary" asp-route-id="@Model.beneficiary[i].id" style="color: #17a2b8 "><i class="bi bi-person-lines-fill"></i></a> |
+                            <a asp-action="Delete" asp-controller="Beneficiary" asp-route-id="@Model.beneficiary[i].id" style="color: #17a2b8 "><i class="bi bi-person-x-fill"></i></a> |
+                            @if (Model.beneficiary[i].faceId == false && !User.IsInRole("Employee"))
+                            {<a data-toggle="ajax-modal" data-target="ShowPopup" data-url="@Url.Action("CaptionImage", "Issues", new { id = Model.beneficiary[i].id })   " style="color: #17a2b8 "><i class="bi bi-camera-fill"></i></a>}
+                            @if (Model.beneficiary[i].faceId == true && Model.beneficiary[i].faceIdChecked == false)
+                            {
+                                <a data-toggle="ajax-modal" data-target="ShowPopup" data-url="@Url.Action("checkPerson", "Issues", new { id = Model.beneficiary[i].id })   " style="color: #17a2b8 "><i class="bi bi-person-check-fill"></i></a>
+                                @if (User.IsInRole("admin")) 
+                                {
+                                    <a data-toggle="ajax-modal" data-target="ShowPopup" data-url="@Url.Action("deleteFaceID", "Issues", new { id = Model.beneficiary[i].id })   " style="color: #17a2b8 "><i class="bi bi-shield-fill-x"></i></a>
+                                }
+                             }
+                            @if ((Model.beneficiary[i].faceId == true && Model.beneficiary[i].faceIdChecked == true))
+                            {<i class="bi bi-shield-check"></i>}
+                            @if (User.IsInRole("Finance"))
+                            {<a data-toggle="ajax-modal" data-target="#AddFees" data-url="@Url.Action("Create", "Fees", new { contractId = Model.realtyContract.id, personId = Model.beneficiary[i].person.idNumber })" style="color: #17a2b8 "><i class="bi bi-cash-coin"></i></a>}
+                            @if (User.IsInRole("Judge"))
+                            {
+                                <a data-toggle="ajax-modal" data-target="ShowPopup" data-url="@Url.Action("Create", "OfficialDocument", new { contractid = Model.realtyContract.id, personId = Model.beneficiary[i].person.idNumber });" style="color: #17a2b8 "><i class="bi bi-camera-reels"></i></a>
+                                <span>|</span>
+                                <a data-toggle="ajax-modal" data-target="ShowPopup" data-url="@Url.Action("ScheduleASession", "Beneficiary", new { beneficiaryID = Model.beneficiary[i].id })" style="color: #17a2b8 "><i class="bi bi-calendar2-month"></i></a>
+                            }
+                        </td>
+                        <td>@Html.DisplayFor(model => model.beneficiary[i].person.idNumber)</td>
+                        <td>@Html.DisplayFor(model => model.beneficiary[i].person.firstName)</td>
+                        <td>@Html.DisplayFor(model => model.beneficiary[i].person.lastName)</td>
+                        <td>@Html.DisplayFor(model => model.beneficiary[i].person.fatherName)</td>
+                        <td>@Html.DisplayFor(model => model.beneficiary[i].period)</td>
+                        <td>@Html.DisplayFor(model => model.beneficiary[i].waysToCommunicate.wayName)</td>
+                    </tr>
+                }
+            }
+        </table>
+    </div>       <!--معلومات المالكين-->
+    <hr />
+    <div class="row">
+        <div class="col-10">
+            <h2>
+                معلومات المشترين
+            </h2>
+        </div>
+        <div class="col-2">
+            @if (!User.IsInRole("Employee"))
+            {
+                <a data-toggle="ajax-modal" data-target="ShowPopup" data-url="@Url.Action("AddPerson", "Beneficiary", new { contract = Model.realtyContract.id, type = "مشتري" })" class="btn btn-info" style="width:160px;">
+                    إضافة مشتري
+                </a>
+            }
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <table border="1" class="text-center col-12">
+            <tr>
+                <th>#</th>
+                <th>الرقم الوطني</th>
+                <th>الاسم</th>
+                <th>الكنية</th>
+                <th>اسم الأب</th>
+                <th>القيمة السهمية</th>
+                <th>طريقة التواصل</th>
+            </tr>
+            @for (int i = 0; i < Model.beneficiary.Count; i++)
+            {
+                @if (Model.beneficiary[i].typePerson == "مشتري")
+                {
+                    var col = "";
+                    @if (Model.beneficiary[i].isChecked == true)
+                    {
+                        col = "lightgreen";
+                    }
+                    <tr style="background-color:@col">
+                        <td>
+                            <a asp-action="Details" asp-controller="Beneficiary" asp-route-id="@Model.beneficiary[i].id" style="color: #17a2f8 "><i class="bi bi-eye"></i></a> |
+                            <a asp-action="Edit" asp-controller="Beneficiary" asp-route-id="@Model.beneficiary[i].id" style="color: #17a2b8 "><i class="bi bi-person-lines-fill"></i></a> |
+                            <a asp-action="Delete" asp-controller="Beneficiary" asp-route-id="@Model.beneficiary[i].id" style="color: #17a2b8 "><i class="bi bi-person-x-fill"></i></a> |
+                            @if (Model.beneficiary[i].faceId == false && !User.IsInRole("Employee"))
+                            {<a data-toggle="ajax-modal" data-target="ShowPopup" data-url="@Url.Action("CaptionImage", "Issues", new { id = Model.beneficiary[i].id })   " style="color: #17a2b8 "><i class="bi bi-camera-fill"></i></a>}
+                            @if (Model.beneficiary[i].faceId == true && Model.beneficiary[i].faceIdChecked == false)
+                            {
+                                <a data-toggle="ajax-modal" data-target="ShowPopup" data-url="@Url.Action("checkPerson", "Issues", new { id = Model.beneficiary[i].id })   " style="color: #17a2b8 "><i class="bi bi-person-check-fill"></i></a>
+                               @if (User.IsInRole("admin")) 
+                                {
+                                    <a data-toggle="ajax-modal" data-target="ShowPopup" data-url="@Url.Action("deleteFaceID", "Issues", new { id = Model.beneficiary[i].id })   " style="color: #17a2b8 "><i class="bi bi-shield-fill-x"></i></a>
+                                }
+                            }
+                            @if ((Model.beneficiary[i].faceId == true && Model.beneficiary[i].faceIdChecked == true))
+                            {<i class="bi bi-shield-check"></i>}
+                            @if (User.IsInRole("Finance"))
+                            {<a data-toggle="ajax-modal" data-target="#AddFees" data-url="@Url.Action("Create", "Fees", new { contractId = Model.realtyContract.id, personId = Model.beneficiary[i].person.idNumber })" style="color: #17a2b8 "><i class="bi bi-cash-coin"></i></a>}
+                            @if (User.IsInRole("Judge"))
+                            {
+                                <a data-toggle="ajax-modal" data-target="ShowPopup" data-url="@Url.Action("Create", "OfficialDocument", new { contractid = Model.realtyContract.id, personId = Model.beneficiary[i].person.idNumber });" style="color: #17a2b8 "><i class="bi bi-camera-reels"></i></a>
+                                <span>|</span>
+                                <a data-toggle="ajax-modal" data-target="ShowPopup" data-url="@Url.Action("ScheduleASession", "Beneficiary", new { beneficiaryID = Model.beneficiary[i].id })" style="color: #17a2b8 "><i class="bi bi-calendar2-month"></i></a>
+                            }
+                        </td>
+                        <td>@Html.DisplayFor(model => model.beneficiary[i].person.idNumber)</td>
+                        <td>@Html.DisplayFor(model => model.beneficiary[i].person.firstName)</td>
+                        <td>@Html.DisplayFor(model => model.beneficiary[i].person.lastName)</td>
+                        <td>@Html.DisplayFor(model => model.beneficiary[i].person.fatherName)</td>
+                        <td>@Html.DisplayFor(model => model.beneficiary[i].period)</td>
+                        <td>@Html.DisplayFor(model => model.beneficiary[i].waysToCommunicate.wayName)</td>
+                    </tr>
+                }
+            }
+        </table>
+    </div>       <!--معلومات المشترين-->
+    <hr />
+    <div class="row">
+        <div class="col-12"><h2>ايصالات الدفع</h2></div>
+
+    </div>
+    <hr />
+    <div class="row">
+        <table border="1" class="text-center col-12">
+            <tr>
+                <th>#</th>
+                <th>الرقم الوطني</th>
+                <th>الاسم</th>
+                <th>الكنية</th>
+                <th>اسم الأب</th>
+                <th>سبب الدفع</th>
+                <th>القيمة المالية</th>
+            </tr>
+            @for (int i = 0; i < Model.fees.Count; i++)
+            {
+                var col = "";
+                @if (Model.fees[i].isPayment == true)
+                {
+                    col = "lightgreen";
+                }
+                else if (Model.fees[i].paymentImage != null && Model.fees[i].financialNoticeNumber != null)
+                { col = "darksalmon"; }
+                <tr style="background-color:@col">
+                    <td>
+                        <a data-toggle="ajax-modal" data-target="#EditeFees" data-url="@Url.Action("Details", "Fees", new { id = Model.fees[i].id })" style="color: #17a2b8 "><i class="bi bi-eye"></i></a>
+                        @if (User.IsInRole("Finance"))
+                        {
+                            <a data-toggle="ajax-modal" data-target="#EditeFees" data-url="@Url.Action("Edit", "Fees", new { id = Model.fees[i].id })" style="color: #17a2b8 "><i class="bi bi-file-earmark-text-fill"></i></a>
+                            <a data-toggle="ajax-modal" data-target="#EditeFees" data-url="@Url.Action("Delete", "Fees", new { id = Model.fees[i].id })" style="color: #17a2b8 "><i class="bi bi-file-earmark-x-fill"></i></a>
+                        }
+                    </td>
+                    <td>@Html.DisplayFor(model => model.fees[i].person.idNumber)</td>
+                    <td>@Html.DisplayFor(model => model.fees[i].person.firstName)</td>
+                    <td>@Html.DisplayFor(model => model.fees[i].person.lastName)</td>
+                    <td>@Html.DisplayFor(model => model.fees[i].person.fatherName)</td>
+                    <td>@Html.DisplayFor(model => model.fees[i].reasonOfPayment)</td>
+                    <td>@Html.DisplayFor(model => model.fees[i].theFinancialValue)</td>
+                    @if (Model.fees[i].isPayment == false)
+                    {
+                        @if (!User.IsInRole("Employee"))
+                        {
+                            <td><a data-toggle="ajax-modal" data-target="ShowPopup" data-url="@Url.Action("AddPayment", "Fees", new { id = Model.fees[i].id })" class="btn btn-secondary">إضافة وصل الدفع</a></td>
+                        }
+                    }
+                </tr>
+            }
+        </table>
+    </div>       <!--ايصالات الدفع-->
+    <hr />
+    <div class="row">
+        <div class="col-10"><h2>المرفقات</h2></div>
+        <div class="col-2"><a data-toggle="ajax-modal" data-target="ShowPopup" data-url="@Url.Action("Create","OfficialDocument",new { contractid= Model.realtyContract.id})" class="btn btn-info" style="width:160px;">تحميل مرفق</a></div>
+    </div>
+    <hr />
+    <div class="row">
+        @for (int i = 0; i < Model.officialDocument.Count; i++)
+        {
+            var col = "";
+            @if (Model.officialDocument[i].isChecked == true)
+            {
+                col = "lightgreen";
+            }
+            <div class="col-3 text-center">
+                @if (Model.officialDocument[i].imageType.Contains("Court session"))
+                {
+                    <video controls="controls" style="background-color:@col" height="175">
+                        <source src="~/OfficialDocument/@Model.officialDocument[i].image">
+                    </video>
+                }
+                else
+                {
+                    <img src="~/OfficialDocument/@Model.officialDocument[i].image" class="img-thumbnail" style="background-color:@col" height="175" />
+                }
+                <br />
+                <span>
+                    @Model.officialDocument[i].imageType |
+                    <a data-toggle="ajax-modal" data-target="ShowPopup" data-url="@Url.Action("Delete","OfficialDocument",new { id= Model.officialDocument[i].id})" style="color: #17a2b8 "><i class="bi bi-trash-fill"></i></a> |
+                    <a data-toggle="ajax-modal" data-target="ShowPopup" data-url="@Url.Action("Edit","OfficialDocument",new { id= Model.officialDocument[i].id})" style="color: #17a2b8 "><i class="bi bi-pencil-square"></i></a> |
+                    <a data-toggle="ajax-modal" data-target="ShowPopup" data-url="@Url.Action("Details","OfficialDocument",new { id= Model.officialDocument[i].id})" style="color: #17a2b8 "><i class="bi bi-eye"></i></a>
+                </span>
+
+            </div>
+        }
+    </div>       <!--الاوراق الرسمية-->
+</div>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/webcamjs/webcam.js"></script>

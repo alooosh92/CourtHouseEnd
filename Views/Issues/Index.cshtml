@@ -1,0 +1,355 @@
+﻿@model CourtHouse.Data.ViewModels.VMRealtyContractWithList
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+<div id="modalshow"></div>
+@if (!User.IsInRole("Employee"))
+{
+    <p>
+        <a data-toggle="ajax-modal" data-target="#ShowPopup" data-url="@Url.Action("AddRealty", "Issues")" class="btn btn-info">Create New</a>
+    </p>
+}
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <div class="row">
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="case nav-link text-info active" id="NewContract" type="button" aria-selected="true" onclick="typecase('NewContract')">
+                        جديد
+                        @if (Model.NewContract.Count() != 0)
+                        {
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-info text-light">
+                                @Model.NewContract.Count()
+                            </span>
+                        }
+                    </button>
+                </li>
+                @if (Model.CheckContract.Count > 0 || User.IsInRole("Admin") || User.IsInRole("LocalAdmin"))
+                {
+                    <li class="nav-item" role="presentation">
+                        <button class="case nav-link text-info bg-light" id="CheckContract" type="button" aria-selected="false" onclick="typecase('CheckContract')">
+                            قضايا مدققة
+                            @if (Model.CheckContract.Count() != 0)
+                            {
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-info text-light">
+                                    @Model.CheckContract.Count()
+                                </span>
+                            }
+                        </button>
+                    </li>
+                }
+                @if (Model.WaitPayContract.Count > 0 || User.IsInRole("Admin") || User.IsInRole("LocalAdmin") || User.IsInRole("Finance"))
+                {
+                    <li class="nav-item" role="presentation">
+                        <button class="case nav-link text-info bg-light" id="WaitPayContract" type="button" aria-selected="false" onclick="typecase('WaitPayContract')">
+                            قضايا بنتظار الدفع
+                            @if (Model.WaitPayContract.Count() != 0)
+                            {
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-info text-light">
+                                    @Model.WaitPayContract.Count()
+                                </span>
+                            }
+                        </button>
+                    </li>
+                }
+                @if (Model.WaitScheduleContract.Count > 0 || User.IsInRole("Admin") || User.IsInRole("LocalAdmin"))
+                {
+                    <li class="nav-item" role="presentation">
+                        <button class="case nav-link text-info bg-light" id="WaitScheduleContract" type="button" aria-selected="false" onclick="typecase('WaitScheduleContract')">
+                            قضايا غير مجدولة
+                            @if (Model.WaitScheduleContract.Count() != 0)
+                            {
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-info text-light">
+                                    @Model.WaitScheduleContract.Count()
+                                </span>
+                            }
+                        </button>
+                    </li>
+                }
+                @if (Model.ScheduleContract.Count > 0 || User.IsInRole("Admin") || User.IsInRole("LocalAdmin") || User.IsInRole("Judge"))
+                {
+                    <li class="nav-item" role="presentation">
+                        <button class="case nav-link text-info bg-light" id="ScheduleContract" type="button" aria-selected="false" onclick="typecase('ScheduleContract')">
+                            قضايا مجدولة
+                            @if (Model.ScheduleContract.Count() != 0)
+                            {
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-info text-light">
+                                    @Model.ScheduleContract.Count()
+                                </span>
+                            }
+                        </button>
+                    </li>
+                }
+                @if (Model.ScheduleContractToday.Count > 0 || User.IsInRole("Admin") || User.IsInRole("LocalAdmin") || User.IsInRole("Judge"))
+                {
+                    <li class="nav-item" role="presentation">
+                        <button class="case nav-link text-info bg-light" id="ScheduleContract" type="button" aria-selected="false" onclick="typecase('ScheduleContractToday')">
+                             قضايا مجدولة لهذا اليوم
+                            @if (Model.ScheduleContractToday.Count() != 0)
+                            {
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-info text-light">
+                                    @Model.ScheduleContractToday.Count()
+                                </span>
+                            }
+                        </button>
+                    </li>
+                }
+                @if (Model.EndContract.Count > 0 || User.IsInRole("Admin") || User.IsInRole("LocalAdmin"))
+                {
+                    <li class="nav-item" role="presentation">
+                        <button class="case nav-link text-info bg-light" id="EndContract" type="button" aria-selected="false" onclick="typecase('EndContract')">
+                            قضايا منتهية
+                            @if (Model.EndContract.Count() != 0)
+                            {
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-info text-light">
+                                    @Model.EndContract.Count()
+                                </span>
+                            }
+                        </button>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+</nav>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                رقم العقار
+            </th>
+            <th>
+                تاريخ الانشاء
+            </th>
+            <th>
+                نوع العقد
+            </th>
+            <th>
+                المحافظة
+            </th>
+            <th>
+                المنطقة
+            </th>
+            <th>
+                العنوان
+            </th>
+        </tr>
+    </thead>
+    <tbody id="TNewContract" style="display:normal">
+        @foreach (var item in Model.NewContract)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(model => item.realty.id)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.startDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.contractType)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.realty.region.regionName)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.realty.area)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.realty.adress)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.id" style="color: #17a2f8"><i class="bi bi-pencil"></i></a> |
+                    <a asp-action="Details" asp-route-id="@item.id" style="color: #17a2f8"><i class="bi bi-eye"></i></a> |
+                    <a data-toggle="ajax-modal" data-target="#ShowPopup" data-url="@Url.Action("Delete", "Issues", new { id = item.id })" style="color: #17a2f8"><i class="bi bi-x-circle"></i></a>
+                </td>
+            </tr>
+        }
+    </tbody>
+    <tbody id="TCheckContract" style="display:none">
+        @foreach (var item in Model.CheckContract)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(model => item.realty.id)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.startDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.contractType)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.realty.region.regionName)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.realty.area)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.realty.adress)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.id" style="color: #17a2f8"><i class="bi bi-pencil"></i></a> |
+                    <a asp-action="Details" asp-route-id="@item.id" style="color: #17a2f8"><i class="bi bi-eye"></i></a> |
+                    <a data-toggle="ajax-modal" data-target="#ShowPopup" data-url="@Url.Action("Delete", "Issues", new { id = item.id })" style="color: #17a2f8"><i class="bi bi-x-circle"></i></a>
+                </td>
+            </tr>
+        }
+    </tbody>
+    <tbody id="TWaitPayContract" style="display:none">
+        @foreach (var item in Model.WaitPayContract)
+        {
+            var colr = "";
+            @if (item.isPayFinance == true && User.IsInRole("Finance"))
+            { colr = "lightgreen"; }
+            <tr style="background-color:@colr">
+                <td>
+                    @Html.DisplayFor(model => item.realty.id)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.startDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.contractType)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.realty.region.regionName)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.realty.area)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.realty.adress)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.id" style="color: #17a2f8"><i class="bi bi-pencil"></i></a> |
+                    <a asp-action="Details" asp-route-id="@item.id" style="color: #17a2f8"><i class="bi bi-eye"></i></a> |
+                    <a data-toggle="ajax-modal" data-target="#ShowPopup" data-url="@Url.Action("Delete", "Issues", new { id = item.id }) style=" color: #17a2f8""><i class="bi bi-x-circle"></i></a>
+                </td>
+            </tr>
+        }
+    </tbody>
+    <tbody id="TWaitScheduleContract" style="display:none">
+        @foreach (var item in Model.WaitScheduleContract)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(model => item.realty.id)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.startDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.contractType)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.realty.region.regionName)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.realty.area)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.realty.adress)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.id" style="color: #17a2f8"><i class="bi bi-pencil"></i></a> |
+                    <a asp-action="Details" asp-route-id="@item.id" style="color: #17a2f8"><i class="bi bi-eye"></i></a> |
+                    <a data-toggle="ajax-modal" data-target="#ShowPopup" data-url="@Url.Action("Delete", "Issues", new { id = item.id })" style="color: #17a2f8"><i class="bi bi-x-circle"></i></a>
+                </td>
+            </tr>
+        }
+    </tbody>
+    <tbody id="TScheduleContract" style="display:none">
+        @foreach (var item in Model.ScheduleContract)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(model => item.realty.id)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.startDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.contractType)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.realty.region.regionName)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.realty.area)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.realty.adress)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.id" style="color: #17a2f8"><i class="bi bi-pencil"></i></a> |
+                    <a asp-action="Details" asp-route-id="@item.id" style="color: #17a2f8"><i class="bi bi-eye"></i></a> |
+                    <a data-toggle="ajax-modal" data-target="#ShowPopup" data-url="@Url.Action("Delete", "Issues", new { id = item.id })" style="color: #17a2f8"><i class="bi bi-x-circle"></i></a>
+                </td>
+            </tr>
+        }
+    </tbody>
+    <tbody id="TScheduleContractToday" style="display:none">
+        @foreach (var item in Model.ScheduleContractToday)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(model => item.realty.id)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.startDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.contractType)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.realty.region.regionName)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.realty.area)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.realty.adress)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.id" style="color: #17a2f8"><i class="bi bi-pencil"></i></a> |
+                    <a asp-action="Details" asp-route-id="@item.id" style="color: #17a2f8"><i class="bi bi-eye"></i></a> |
+                    <a data-toggle="ajax-modal" data-target="#ShowPopup" data-url="@Url.Action("Delete", "Issues", new { id = item.id })" style="color: #17a2f8"><i class="bi bi-x-circle"></i></a>
+                </td>
+            </tr>
+        }
+    </tbody>
+    <tbody id="TEndContract" style="display:none">
+        @foreach (var item in Model.EndContract)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(model => item.realty.id)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.startDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.contractType)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.realty.region.regionName)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.realty.area)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.realty.adress)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.id" style="color: #17a2f8"><i class="bi bi-pencil"></i></a> |
+                    <a asp-action="Details" asp-route-id="@item.id" style="color: #17a2f8"><i class="bi bi-eye"></i></a> |
+                    <a data-toggle="ajax-modal" data-target="#ShowPopup" data-url="@Url.Action("Delete", "Issues", new { id = item.id })" style="color: #17a2f8"><i class="bi bi-x-circle"></i></a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+

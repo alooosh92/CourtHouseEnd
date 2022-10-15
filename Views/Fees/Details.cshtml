@@ -1,0 +1,67 @@
+﻿@model CourtHouse.Models.Fees
+
+<div class="modal fade" id="EditeFees">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="col-8">
+                    @Model.person.firstName @Model.person.lastName
+                </div>
+                <div class="col-2">
+                    @if (User.IsInRole("Admin") && Model.isPayment == true)
+                    {
+                        <form asp-action="Edit">
+                            <input asp-for="id" style="display:none" />
+                            <input type="text" name="check" value="UnCkecker" style="display:none" />
+                            <input type="submit" value="غير مدقق" class="btn btn-info" />
+                        </form>
+                    }
+                </div>
+                <div class="col-2">
+                    @if (User.IsInRole("Finance") && Model.isPayment == false)
+                    {
+                        <form asp-action="Edit">
+                            <input asp-for="id" style="display:none" />
+                            <input type="text" name="check" value="Checker" style="display:none" />
+                            <input type="submit" value="مدقق" class="btn btn-info" />
+                        </form>
+                    }
+                </div>
+                <hr />
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-3">
+                            <label asp-for="theFinancialValue" class="control-label">قيمة الايصال</label>
+                            <input asp-for="theFinancialValue" class="form-control" disabled />
+                            <span asp-validation-for="theFinancialValue" class="text-danger"></span>
+                        </div>
+                        <div class="col-3">
+                            <label asp-for="reasonOfPayment" class="control-label">سبب الدفع</label>
+                            <input asp-for="reasonOfPayment" class="form-control" disabled/>
+                            <span asp-validation-for="reasonOfPayment" class="text-danger"></span>
+                        </div>
+                        <div class="col-3">
+                            <label asp-for="financialNoticeNumber" class="control-label">رقم ايصال الدفع</label>
+                            <input asp-for="financialNoticeNumber" class="form-control" disabled/>
+                            <span asp-validation-for="financialNoticeNumber" class="text-danger"></span>
+                        </div>
+                        <div class="col-3">
+                            <label asp-for="isPayment" class="control-label">مدفوع</label>
+                            <input asp-for="isPayment" class="form-control" disabled/>
+                            <span asp-validation-for="isPayment" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <img src="~/FeesImages/@Model.paymentImage" class="img-thumbnail" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

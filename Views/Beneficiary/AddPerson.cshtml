@@ -1,0 +1,33 @@
+﻿@model CourtHouse.Models.Beneficiary
+<div class="modal fade" id="ShowPopup">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content text-right">
+            @if (Model.id != "Error")
+            {
+            <form asp-action="AddPerson">
+                <div class="modal-header">
+                    <h2>الرجاء إدخال الرقم الوطني</h2>
+                </div>
+                <div class="modal-body">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <input asp-for="person.idNumber" class="form-control" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <input type="hidden" asp-for="realtyContract.id" class="form-control" />
+                    <input type="hidden" asp-for="typePerson" class="form-control" />
+                    <input type="submit" value="بحث" class="btn btn-info" />
+                </div>
+            </form>
+            }
+            else 
+            {
+                <h5>لا يمكن اضافة اشخاص بعد تدقيق البيانات</h5>
+                <div class="modal-footer">
+                    <button class="btn btn-info" data-dismiss="modal">موافق</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>

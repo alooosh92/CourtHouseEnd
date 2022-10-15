@@ -1,0 +1,33 @@
+﻿@model CourtHouse.Models.RealtyContract
+
+<div class="modal fade" id="ShowPopup">
+    <div class="modal-dialog modal-xl">
+        <form asp-action="SentMessege">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4>ارسال رسالة</h4>
+                    <hr />
+                </div>
+                <div class="modal-body">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <input type="text" name="subject" class="form-control" placeholder="موضوع الرسالة" />
+                    </div>
+                    <div class="form-group">
+                        <textarea class="form-control" name="messegeBody" placeholder="نص الرسالة"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="form-group">
+                        <input type="text" style="display:none" asp-for="id" />
+                        <input type="submit" value="ارسال" class="btn btn-primary" />
+                        <button type="button" data-dismiss="modal" class="btn btn-warning">إلغاء</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+

@@ -1,0 +1,68 @@
+﻿@model CourtHouse.Models.Beneficiary
+<div class="modal fade" id="ShowPopup">
+    <div class="modal-dialog modal-lg">
+        <form asp-action="saveImage">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="row">
+                        <h4>الصورة الشخصية</h4>
+                    </div>                    
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <h6>الرجاء ازالة اي غطاء من على الرأس وازالة النظارات ان وجدت والنظر مباشرة الى الكمرة</h6>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <div id="idwebcam"></div>
+                        </div>
+                        <div class="col-6">
+                            <img id="idcapt" src="~/img/person.png" width="320" height="240" />
+                        </div>
+                    </div>
+                    <br />
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="idper" id="idper" asp-for="id" hidden />
+                        <input type="text" class="form-control" name="rea" id="rea" asp-for="realtyContract.id" hidden />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div>
+                        <input class="btn-info align-content-center" type="button" id="btncapt" value="Caption" />
+                        <button asp-action="Details" asp-controller="Issues" asp-route-id="@Model.realtyContract.id" class="btn-success" id="btnOk">Done</button>
+                    </div>
+
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    let name = document.getElementById('idper').value + '_RealImage_';
+    $(function () {
+        Webcam.set({
+            width: 320,
+            height: 240,
+            image_format: 'jpeg',
+            jpeg_quality: 100,
+            upload_name: name
+        });
+        Webcam.attach('#idwebcam')
+        $('#btncapt').click(function () {
+            let t = 0;
+            for (let i = 0; i < 2; i++) {
+                let img = '#idcapt';
+                setTimeout(function () {
+                    Webcam.snap(function (data_uri) {
+                        $(img)[0].src = data_uri;
+                        console.log(data_uri);
+                        Webcam.upload(data_uri, "saveImage");
+                    });
+                }, t);
+                t = t + 200;
+            }
+        });
+    });
+</script>

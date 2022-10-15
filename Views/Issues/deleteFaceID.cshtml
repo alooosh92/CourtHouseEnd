@@ -1,0 +1,20 @@
+﻿@model CourtHouse.Models.Beneficiary
+
+<div class="modal fade" id="ShowPopup">
+    <div class="modal-dialog">
+        <form asp-action="deleteFaceID">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>هل متأكد من حذف الصور الشخصية</h3>
+                </div>
+                <div class="modal-footer">
+                    <input type="hidden" asp-for="id" />
+                    @if (Model.id != "Error")
+                    {<input type="submit" value="Delete" class="btn btn-danger" />}
+                    |<input type="button" value="Close" class="btn btn-success" data-dismiss="modal" />
+
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

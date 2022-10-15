@@ -1,0 +1,76 @@
+﻿@model CourtHouse.Data.ViewModels.VMRealtyContractRealty
+@inject Microsoft.AspNetCore.Identity.UserManager<User> userManger
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+<hr />
+<div class="container-fluid text-right">
+    <form asp-action="Create">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="row">
+            <div class="col-lg-5">
+                <label asp-for="realtyContract.contractType">نوع العقد</label>
+                <select asp-for="realtyContract.contractType" class="form-control">
+                    <option value="مبيع">مبيع</option>
+                    <option value="شراء">شراء</option>
+                    <option value="حصل ارث">حصل ارث</option>
+                </select>
+                <span asp-validation-for="realtyContract.contractType" class="text-danger"></span>
+            </div>
+            <div class=" col-lg-5">
+
+                <label asp-for="realty.id">رقم العقار</label>
+                <input asp-for="realty.id" class="form-control" readonly />
+                <span asp-validation-for="realty.id" class="text-danger"></span>
+            </div>
+            <div class="col-lg-5">
+                <label asp-for="realty.realtyType">نوع العقار</label>
+                <input asp-for="realty.realtyType" class="form-control" readonly/>
+                <span asp-validation-for="realty.realtyType" class="text-danger"></span>
+            </div>
+            <div class="col-lg-5">
+                <label asp-for="realty.regionSelect">المحافظة</label>
+
+                <select asp-for="realty.regionSelect" class="form-control" asp-items="@(new SelectList(Model.realty.regionList, "id", "regionName"))" readonly>
+                    <option value="-1">--إختر المحافظة--</option>
+                </select>
+                <span asp-validation-for="realty.regionSelect" class="text-danger"></span>
+            </div>
+            <div class="col-lg-5">
+                <label asp-for="realty.area">منطقة العقار</label>
+                <input asp-for="realty.area" class="form-control" readonly/>
+                <span asp-validation-for="realty.area" class="text-danger"></span>
+            </div>
+            <div class="col-lg-5">
+                <label asp-for="realty.theFinancialValue">القيمة التقديرية للعقار</label>
+                <input asp-for="realty.theFinancialValue" class="form-control" readonly/>
+                <span asp-validation-for="realty.theFinancialValue" class="text-danger"></span>
+            </div>
+            <div class="col-lg-5">
+                <label asp-for="realty.adress">العنوان</label>
+                <input asp-for="realty.adress" class="form-control" readonly/>
+                <span asp-validation-for="realty.adress" class="text-danger"></span>
+            </div>
+            <div class="col-lg-5">
+                <label asp-for="realty.info">معلومات</label>
+                <input asp-for="realty.info" class="form-control" readonly/>
+                <span asp-validation-for="realty.info" class="text-danger"></span>
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-12">
+                <input type="submit" value="Create" class="btn btn-primary" />
+                <input asp-for="realty.id" style="display:none;" />
+                <a asp-action="Index" asp-route-username="@userManger.GetUserId(User)" class="btn btn-warning">Cancel</a>
+                <input asp-for="realtyContract.user" value="@userManger.GetUserId(User)" style="display:none;" />
+            </div>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

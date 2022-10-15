@@ -1,0 +1,150 @@
+﻿@model CourtHouse.Data.ViewModels.VMBeneficiary
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <h2>@Model.typePerson</h2>
+        </div>
+    </div>
+    <hr />
+    <form asp-action="Create" enctype="multipart/form-data">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="row">
+            <div class="form-group col-6">
+                <label asp-for="period" class="control-label">القيمة السهمية</label>
+                <input asp-for="period" class="form-control" required  value=""/>
+                <span asp-validation-for="period" class="text-danger"></span>
+            </div>
+            <div class="form-group col-6">
+                <label asp-for="wayToCommunicate" class="control-label">طريقة التواصل</label>
+                <select asp-for="wayToCommunicate" class="form-control" asp-items="@(new SelectList(Model.ways,"id","wayName"))" required>
+                    <option value="">--إختر طريقة التواصل المفضلة--</option>
+                </select>
+                <span asp-validation-for="wayToCommunicate" class="text-danger"></span>
+            </div>
+            <div class="form-group col-4">
+                <label asp-for="person.title" class="control-label">الصفة</label>
+                <select asp-for="person.title" class="form-control" required>
+                    <option value="-1">--إختر الصفة--</option>
+                    <option value="السيد">السيد</option>
+                    <option value="السيدة">السيدة</option>
+                    <option value="الأنسة">الأنسة</option>
+                </select>
+                <span asp-validation-for="person.title" class="text-danger"></span>
+            </div>
+            <div class="form-group col-4">
+                <label asp-for="person.firstName" class="control-label">الاسم</label>
+                <input asp-for="person.firstName" class="form-control" required/>
+                <span asp-validation-for="person.firstName" class="text-danger"></span>
+            </div>
+            <div class="form-group col-4">
+                <label asp-for="person.lastName" class="control-label">الكنية</label>
+                <input asp-for="person.lastName" class="form-control" required/>
+                <span asp-validation-for="person.lastName" class="text-danger"></span>
+            </div>
+            <div class="form-group col-4">
+                <label asp-for="person.fatherName" class="control-label">اسم الاب</label>
+                <input asp-for="person.fatherName" class="form-control" required/>
+                <span asp-validation-for="person.fatherName" class="text-danger"></span>
+            </div>
+            <div class="form-group col-4">
+                <label asp-for="person.motherName" class="control-label">اسم الام</label>
+                <input asp-for="person.motherName" class="form-control" required/>
+                <span asp-validation-for="person.motherName" class="text-danger"></span>
+            </div>
+            <div class="form-group col-4">
+                <label asp-for="person.placeOFBirth" class="control-label">مكان الولادة</label>
+                <input asp-for="person.placeOFBirth" class="form-control" required/>
+                <span asp-validation-for="person.placeOFBirth" class="text-danger"></span>
+            </div>
+            <div class="form-group col-4">
+                <label asp-for="person.dateOfBirth" class="control-label">تاريخ الميلاد</label>
+                <input asp-for="person.dateOfBirth" class="form-control" required/>
+                <span asp-validation-for="person.dateOfBirth" class="text-danger"></span>
+            </div>
+            <div class="form-group col-4">
+                <label asp-for="person.region.id" class="control-label">محافظة القيد</label>
+                <select asp-for="person.region.id" class="form-control" asp-items="@(new SelectList(Model.regionList,"id","regionName"))" required>
+                    <option value="-1">--إختر المحافظة--</option>
+                </select>
+                <span asp-validation-for="person.region.id" class="text-danger"></span>
+            </div>
+            <div class="form-group col-4">
+                <label asp-for="person.idNumber" class="control-label">القم الوطني</label>
+                <input asp-for="person.idNumber" class="form-control" disabled required/>
+                <span asp-validation-for="person.idNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group col-4">
+                <label asp-for="person.nationality" class="control-label">الجنسية</label>
+                <input asp-for="person.nationality" class="form-control" required/>
+                <span asp-validation-for="person.nationality" class="text-danger"></span>
+            </div>
+            <div class="form-group col-4">
+                <label asp-for="person.mobile" class="control-label">رقم المبايل</label>
+                <input asp-for="person.mobile" class="form-control" required/>
+                <span asp-validation-for="person.mobile" class="text-danger"></span>
+            </div>
+            <div class="form-group col-4">
+                <label asp-for="person.phone" class="control-label">رقم الهاتف</label>
+                <input asp-for="person.phone" class="form-control" required/>
+                <span asp-validation-for="person.phone" class="text-danger"></span>
+            </div>
+            <div class="form-group col-4">
+                <label asp-for="person.adress" class="control-label">العنوان بالتفصيل</label>
+                <input asp-for="person.adress" class="form-control" required/>
+                <span asp-validation-for="person.adress" class="text-danger"></span>
+            </div>
+            <div class="form-group col-4">
+                <label asp-for="person.emailAddress" class="control-label">البريد الالكتروني</label>
+                <input asp-for="person.emailAddress" class="form-control" required/>
+                <span asp-validation-for="person.emailAddress" class="text-danger"></span>
+            </div>
+            <h4 style="color:red">على الصورة أن لايتجاوز حجمها 200 كيلوبايت</h4>
+            <div class="row">
+                <div class="form-group col-4">
+                    <label asp-for="personImage" class="control-label">الصورة الشخصية</label>
+                    <input type="file" accept="image/jpeg, image/jpg" name="personImage" asp-for="personImage" class="form-control" />
+                    <span asp-validation-for="personImage" class="text-danger"></span>
+                </div>
+                <div class="form-group col-4">
+                    <label asp-for="identityImageFront" class="control-label">صورة الهوية الشخصية من الامام</label>
+                    <input type="file" accept="image/jpeg, image/jpg" name="identityImageFront" asp-for="identityImageFront" class="form-control" />
+                    <span asp-validation-for="identityImageFront" class="text-danger"></span>
+                </div>
+                <div class="form-group col-4">
+                    <label asp-for="identityImageBack" class="control-label">صورة الهوية الشخصية من الخلف</label>
+                    <input type="file" accept="image/jpeg, image/jpg" name="identityImageBack" asp-for="identityImageBack" class="form-control" />
+                    <span asp-validation-for="identityImageBack" class="text-danger"></span>
+                </div>
+                @if (Model.person.personImage != null)
+                {
+                    <div class="row">
+                        <div class="col-4">
+                            <img src="~/PersonImages/@Model.person.personImage" class="img-thumbnail" />
+                        </div>
+                        <div class="col-4">
+                            <img src="~/PersonImages/@Model.person.identityImageFront" class="img-thumbnail" />
+                        </div>
+                        <div class="col-4">
+                            <img src="~/PersonImages/@Model.person.identityImageBack" class="img-thumbnail" />
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+        <hr />
+        <div class="form-group">
+            <input asp-for="person.idNumber" style="display:none" />
+            <input asp-for="typePerson" style="display:none" />
+            <input asp-for="realtyContract.id" style="display:none" />
+            <input type="submit" value="Create" class="btn btn-primary" />
+            <a asp-action="Details" asp-controller="Issues" asp-route-id="@Model.realtyContract.id" class="btn btn-warning">Cansel</a>
+        </div>
+    </form>
+</div>
+
+

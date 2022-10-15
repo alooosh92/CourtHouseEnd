@@ -1,0 +1,92 @@
+﻿@model IEnumerable<CourtHouse.Data.ViewModels.VMUser>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table text-center">
+    <thead>
+        <tr>
+            <th>
+                المحافظة
+            </th>
+            <th>
+                اسم المستخدم
+            </th>
+            <th>
+                مدير نظام
+            </th>
+            <th>
+                مدير نظام محلي
+            </th>
+            <th>
+                موظف تدقيق
+            </th>
+            <th>
+                موظف مالية
+            </th>
+            <th>
+                قاضي
+            </th>
+            <th>
+                موظف أرشيف
+            </th>
+            <th>
+                موظف موارد بشرية
+            </th>
+            <th>
+                مدخل بيانات
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                <select asp-for="@item.regionSelect" class="form-control" asp-items="@(new SelectList(item.regionList, "id", "regionName"))" disabled>
+                    <option value="-1"></option>
+                </select>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.userName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Admin)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LocalAdmin)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Checker)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Finance)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Judge)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Recorder)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HumanResources)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DataEntry)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.id" style="color: #17a2f8"><i class="bi bi-pencil"></i></a> |
+                <a asp-action="Details" asp-route-id="@item.id" style="color: #17a2f8"><i class="bi bi-eye"></i></a> |
+                <a asp-action="Delete" asp-route-id="@item.id" style="color: #17a2f8"><i class="bi bi-x-circle"></i></a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

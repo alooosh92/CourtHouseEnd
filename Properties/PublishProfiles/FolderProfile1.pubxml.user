@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+https://go.microsoft.com/fwlink/?LinkID=208121. 
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <_PublishTargetUrl>C:\Users\Alooosh\Desktop\CourtHouse</_PublishTargetUrl>
+    <History>True|2021-11-18T18:59:33.1563760Z;True|2021-11-18T20:43:13.8031253+02:00;True|2021-11-18T19:57:01.7609980+02:00;</History>
+  </PropertyGroup>
+</Project>

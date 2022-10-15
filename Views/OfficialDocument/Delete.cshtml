@@ -1,0 +1,23 @@
+﻿@model CourtHouse.Models.OfficialDocument
+<div class="modal fade" id="ShowPopup">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <form asp-action="Delete">
+                <div class="modal-header">
+                    <h3>هل أنت متأكد من حذف الصورة</h3>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" asp-for="id" />
+                        <input type="text" id="mess" name="mess" placeholder="سبب الحذف" required size="60"/>
+                </div>
+                <div class="modal-footer">
+                    @if (Model.id != "Error")
+                    {
+                        <input type="submit" value="حذف" class="btn btn-danger" />
+                    }|
+                    <input type="button" value="إلغاء" data-dismiss="modal" class="btn btn-warning" />
+                </div>
+            </form>
+        </div>
+    </div>    
+</div>

@@ -1,0 +1,42 @@
+﻿@model CourtHouse.Data.ViewModels.VMOfficialDocument
+
+<div class="modal fade" id="ShowPopup">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                @Model.imageType
+                <hr />
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form asp-action="Create" enctype="multipart/form-data">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="form-group">
+                                <label asp-for="imageType" class="control-label">نوع المرفق</label>
+                                @if (Model.imageType == "Court session")
+                                {
+                                <input asp-for="imageType" class="form-control" readonly/>
+                                }else { <input asp-for="imageType" class="form-control" /> }
+                                <span asp-validation-for="imageType" class="text-danger"></span>
+                            </div>
+                            <h4 style="color:red">على الصورة أن لايتجاوز حجمها 200 كيلوبايت</h4>
+                            <div class="form-group">
+                                <label asp-for="imageUrl" class="control-label">اختيار صورة المرفق</label>
+                                <input type="file" asp-for="imageUrl" class="form-control" />
+                                <span asp-validation-for="imageUrl" class="text-danger"></span>
+                            </div>
+                            <div class="modal-footer">
+                                <div class="form-group">
+                                    <input asp-for="realtyContract.id" style="display:none" class="form-control" />
+                                    <input type="submit" value="إضافة" class="btn btn-primary" />
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

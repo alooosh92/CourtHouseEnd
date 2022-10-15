@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file is used by the publish/package process of your Web project. You can customize the behavior of this process
+by editing this MSBuild file. In order to learn more about this please visit https://go.microsoft.com/fwlink/?LinkID=208121. 
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+    <EncryptedPassword />
+    <History>False|2021-11-18T19:10:33.4576373Z;</History>
+    <_PublishTargetUrl>ftp://win5188.site4now.net</_PublishTargetUrl>
+  </PropertyGroup>
+  <ItemGroup>
+    <File Include="appsettings.Development.json">
+      <publishTime>07/22/2021 17:50:06</publishTime>
+    </File>
+    <File Include="appsettings.json">
+      <publishTime>11/18/2021 18:44:41</publishTime>
+    </File>
+    <File Include="CourtHouse.deps.json">
+      <publishTime>11/18/2021 21:09:04</publishTime>
+    </File>
+    <File Include="CourtHouse.dll">
+      <publishTime>11/18/2021 21:08:34</publishTime>
+    </File>
+    <File Include="CourtHouse.exe">
+      <publishTime>11/18/2021 21:08:34</publishTime>
+    </File>
+    <File Include="CourtHouse.pdb">
+      <publishTime>11/18/2021 21:08:34</publishTime>
+    </File>
+    <File Include="CourtHouse.runtimeconfig.json">
+      <publishTime>11/15/2021 14:17:14</publishTime>
+    </File>
+  </ItemGroup>
+</Project>

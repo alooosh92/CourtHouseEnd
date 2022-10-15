@@ -1,0 +1,85 @@
+﻿@model CourtHouse.Data.ViewModels.VMUser
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>VMUser</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            اسم المستخدم
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.userName)
+        </dd>
+        <dt class="col-sm-2">
+            البريد الالكتروني
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.email)
+        </dd>
+        <dt class="col-sm-2">
+            رقم الجوال
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.phoneNumber)
+        </dd>
+        <dt class="col-sm-2">
+            مدير النظام
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Admin)
+        </dd>
+        <dt class="col-sm-2">
+             مدير النظام محلي
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.LocalAdmin)
+        </dd>
+        <dt class="col-sm-2">
+            موظف تدقيق
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Checker)
+        </dd>
+        <dt class="col-sm-2">
+            موظف مالية
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Finance)
+        </dd>
+        <dt class="col-sm-2">
+            قاضي
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Judge)
+        </dd>
+        <dt class="col-sm-2">
+            موظف ارشيف
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Recorder)
+        </dd>
+        <dt class="col-sm-2">
+            مدخل بيانات
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DataEntry)
+        </dd>
+        <dt class="col-sm-2">
+            موظف موارد مالية
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.HumanResources)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

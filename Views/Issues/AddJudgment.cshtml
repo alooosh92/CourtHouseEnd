@@ -1,0 +1,31 @@
+﻿@model CourtHouse.Models.RealtyContract
+
+<div class="modal fade" id="ShowPopup">
+    <div class="modal-dialog modal-xl">
+        <form asp-action="AddJudgment">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4>حكم القاضي</h4>
+                    <hr />
+                </div>
+                <div class="modal-body">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="id" />
+                    <div class="form-group">
+                        <label asp-for="judgment" class="control-label">حكم القاضي</label>
+                        <input asp-for="judgment" class="form-control" />
+                        <span asp-validation-for="judgment" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="form-group">
+                        <input type="submit" value="حفظ" class="btn btn-primary" />
+                        <button type="button" data-dismiss="modal"class="btn btn-warning">إلغاء</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+

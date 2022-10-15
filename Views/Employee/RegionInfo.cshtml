@@ -1,0 +1,142 @@
+﻿@model IEnumerable<CourtHouse.Models.RegionInfo>
+
+@{
+    ViewData["Title"] = "RegionInfo";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+<h1>تقييم المحافظات</h1>
+<div class="container">
+    <div class="row">
+        <div id="chartContainer" class="col-6">
+            <h6 class="text-center">اجمالي القضايا المنجزة</h6>
+            <canvas id="ChartNumAllCases" style="height:200px"></canvas>
+        </div>
+        <div id="chartContainer" class="col-6">
+            <h6 class="text-center">اجمالي القضايا المنجزة هذا الشهر</h6>
+            <canvas id="ChartNumEndCasesInThisMonth" style="height:200px"></canvas>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div id="chartContainer" class="col-6">
+            <h6 class="text-center">قضايا غير منتهية</h6>
+            <canvas id="ChartNumUnfinishedCases" style="height:200px"></canvas>
+        </div>
+        <div id="chartContainer" class="col-6">
+            <h6 class="text-center">متوسط زمن انجاز القضية</h6>
+            <canvas id="ChartAvaregDelayInCase" style="height:200px"></canvas>
+        </div>
+    </div>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                المحافظة
+            </th>
+            <th>
+                اجمال القضايا المنجزة
+            </th>
+            <th>
+                عدد القضايا في لهذا الشهر
+            </th>
+            <th>
+                عدد القضايا الغير المنتهية
+            </th>
+            <th>
+                وسطي زمن انجاز القضية
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.region.regionName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NumAllCases)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NumEndCasesInThisMonth)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NumUnfinishedCases)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AvaregDelayInCase)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/js/Chart.js"></script>
+<script>
+    function myCharts(ChName, ChLabel,ChData,ChType) {
+        const ctx = document.getElementById(ChName).getContext('2d');
+        const myChart = new Chart(ctx, {
+            type: ChType,
+            data: {
+                labels: ChLabel,
+                datasets: [{
+                    label: '',
+                    data: ChData,
+                    backgroundColor: [
+                        'rgba(255, 95, 116, 0.2)',
+                        'rgba(133, 248, 200, 0.2)',
+                        'rgba(44, 211, 255, 0.2)',
+                        'rgba(176, 211, 85, 0.2)',
+                        'rgba(255, 124, 180, 0.2)',
+                        'rgba(60, 250, 231, 0.2)',
+                        'rgba(164, 182, 241, 0.2)',
+                        'rgba(242, 62, 104, 0.2)',
+                        'rgba(150, 21, 119, 0.2)',
+                        'rgba(247, 200, 78, 0.2)',
+                        'rgba(60, 250, 231, 0.2)',
+                        'rgba(107, 246, 222, 0.2)',
+                        'rgba(239, 160, 200, 0.2)',
+                        'rgba(180, 77, 70, 0.2)',
+                        'rgba(180, 120, 154, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 95, 116, 1)',
+                        'rgba(133, 248, 200, 1)',
+                        'rgba(44, 211, 255, 1)',
+                        'rgba(176, 211, 85, 1)',
+                        'rgba(255, 124, 180, 1)',
+                        'rgba(60, 250, 231, 1)',
+                        'rgba(164, 182, 241, 1)',
+                        'rgba(242, 62, 104, 1)',
+                        'rgba(150, 21, 119, 1)',
+                        'rgba(247, 200, 78, 1)',
+                        'rgba(60, 250, 231, 1)',
+                        'rgba(107, 246, 222, 1)',
+                        'rgba(239, 160, 200, 1)',
+                        'rgba(180, 77, 70, 1)',
+                        'rgba(180, 120, 154, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    }
+    $(document).ready(function () {
+        myCharts('ChartNumAllCases',@Html.Raw(ViewData["scrChart"]),@Html.Raw(ViewData["valChart"]), 'radar');
+        myCharts('ChartNumEndCasesInThisMonth',@Html.Raw(ViewData["scrChart"]),@Html.Raw(ViewData["valInMonthChart"]), 'bar');
+        myCharts('ChartNumUnfinishedCases',@Html.Raw(ViewData["scrChart"]),@Html.Raw(ViewData["valNumUnfinishedCases"]), 'doughnut');
+        myCharts('ChartAvaregDelayInCase',@Html.Raw(ViewData["scrChart"]),@Html.Raw(ViewData["valAvaregDelayInCase"]), 'bar');
+    });
+</script>
+

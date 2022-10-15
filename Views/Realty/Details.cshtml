@@ -1,0 +1,55 @@
+﻿@model CourtHouse.Models.Realty
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Realty</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            المنطقة
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.area)
+        </dd>
+        <dt class = "col-sm-2">
+            ملاحظات
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.info)
+        </dd>
+        <dt class = "col-sm-2">
+            نوع العقار
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.realtyType)
+        </dd>
+        <dt class = "col-sm-2">
+            العنوان بالتفصيل
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.adress)
+        </dd>
+        <dt class = "col-sm-2">
+            القيمة التقديرية
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.theFinancialValue)
+        </dd>
+        <dt class = "col-sm-2">
+            مدقق
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.isChecked)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

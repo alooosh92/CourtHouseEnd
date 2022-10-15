@@ -1,0 +1,25 @@
+﻿@model CourtHouse.Models.RealtyContract
+<html lang="ar" dir="rtl">
+<head>
+    <title>طباعة العقد</title>
+</head>
+<body>
+    <div class="row">
+        <span>عقد رقم :@Model.id</span>
+        <table class="col-12" border="1">
+            <tr>
+                <td colspan="6">خلاصة الملكية</td>
+                <td colspan="3">خلاصة طلب التسجيل</td>
+            </tr>
+            <tr>
+                <td colspan="4">سند التمليك</td>
+                <td>المالك</td>
+                <td>الحصة</td>
+                <td>طالب التسجيل</td>
+                <td>الحصة</td>
+                <td>سبب التمليك</td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>

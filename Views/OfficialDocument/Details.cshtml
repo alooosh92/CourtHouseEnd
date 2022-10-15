@@ -1,0 +1,51 @@
+﻿@model CourtHouse.Models.OfficialDocument
+
+<div class="modal fade" id="showPopup">
+     <div class="modal-dialog modal-xl">
+         <div class="modal-content">
+             <div class="modal-header">
+                 <div class="col-8">
+                     <h2>@Model.imageType</h2>
+                 </div>
+                 <div class="col-2">
+                     @if (User.IsInRole("Admin") && Model.isChecked == true)
+                     {
+                         <form asp-action="Edit">
+                             <input type="text" name="id" value="@Model.id" style="display:none" />
+                             <input type="text" name="check" value="UnChecked" style="display:none" />
+                             <input type="submit" value="غير مدقق" class="btn btn-info" />
+                         </form>
+                     }
+                 </div>
+                 <div class="col-2">
+                     @if (User.IsInRole("Checker") && Model.isChecked == false)
+                     {
+                         <form asp-action="Edit">
+                             <input type="text" name="id" value="@Model.id" style="display:none" />
+                             <input type="text" name="check" value="Checked" style="display:none" />
+                             <input type="submit" value="مدقق" class="btn btn-info" />
+                         </form>
+                     }
+                 </div>
+                 <hr />
+             </div>
+             <div class="modal-body">
+                 <dl class="row">
+                     <dt class="col-sm-2">
+                         نوع المرفق
+                     </dt>
+                     <dd class="col-sm-10">
+                         @Html.DisplayFor(model => model.imageType)
+                     </dd>
+                     <dt class="col-sm-2">
+                         @Html.DisplayNameFor(model => model.image)
+                     </dt>
+                     <dd class="col-sm-10">
+                         <img src="~/OfficialDocument/@Model.image" class="img-thumbnail" style="width:400px; height:400px"/>
+                     </dd>                     
+                 </dl>
+             </div>
+         </div>
+     </div>
+</div>
+<script src="~/js/site.js"></script>

@@ -1,0 +1,64 @@
+﻿@page
+@model LoginModel
+
+@{
+    ViewData["Title"] = "Log in";
+    Layout = "_Layout";
+}
+
+<div class="row text-right">
+    <div class="col-8">
+        <h1 class="text-center">الموقع القضائي الأول بسوريا</h1>
+        <p>موقع مختص للقيام بالقضايا الالكترونية عن بعد وبدون التواجد المكاني من داخل وخارج الجمهورية العربية السورية</p>
+        <p>مجموعة كبيرة من الميزات التي ستكون متاحة لك عند تنفيذ معاملاتك عن طريق الموقع</p>
+        <ul>
+            <li>نفذ كامل معاملاتك عن بعد</li>
+            <li>كن على اطلاع على مراحل سير طلبك</li>
+            <li>امكانية تسديد الرسوم عن بعد</li>
+            <li>تقديم الطلبات بطريقة سهلة </li>
+            <li>لا داعي لطوابير الانتظار بعد اليوم</li>
+            <li>احمي نفسك من الامراض المنتشرة</li>
+        </ul>
+        <a class="btn btn-info" asp-area="Identity" asp-page="/Account/Register">انشاء حسابك الأن</a>
+    </div>
+    <div class="col-md-4">
+        <section>
+            <form id="account" method="post">
+                <h4>تسجيل الدخول</h4>
+                <hr />
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Input.UserName">اسم المستخدم</label>
+                    <input asp-for="Input.UserName" class="form-control" />
+                    <span asp-validation-for="Input.UserName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Input.Password">كلمة السر</label>
+                    <input asp-for="Input.Password" class="form-control" />
+                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label asp-for="Input.RememberMe">
+                            <input asp-for="Input.RememberMe" />
+                            حفظ معلومات الدخول
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">تسجيل الدخول</button>
+                </div>
+                <div class="form-group">
+                    <p>
+                        <a id="forgot-password" asp-page="./ForgotPassword">نسيت كلمة المرور؟</a>
+                    </p>
+                    <p>
+                        <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">إنشاء حساب جديد</a>
+                    </p>
+                </div>
+            </form>
+        </section>
+    </div>
+</div>
+
+

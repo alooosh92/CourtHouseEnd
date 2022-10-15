@@ -1,0 +1,81 @@
+﻿@model CourtHouse.Models.Beneficiary
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+
+<h1>هل أنت متأكد من الحذف</h1>
+<div>
+    <div class="container text-right">
+        <div class="row">
+            <div class="col-9">
+                <h1 class="text-right col-10">@Model.person.firstName  @Model.person.lastName</h1>
+            </div>            
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-12">
+                <span style="font-size:x-large">
+                    <b>الصفة</b>:@Model.typePerson
+                    <b>الحصة السهمية</b>:@Model.period
+                </span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <table border="1" class="text-center col-12">
+                    <tr>
+                        <th>الاسم</th>
+                        <td>@Model.person.firstName</td>
+                        <th>الكنية</th>
+                        <td>@Model.person.lastName</td>
+                        <th>اسم الأب</th>
+                        <td>@Model.person.fatherName</td>
+                        <th>اسم الأم</th>
+                        <td>@Model.person.motherName</td>
+                    </tr>
+                    <tr>
+                        <th>مكان الولادة</th>
+                        <td>@Model.person.placeOFBirth</td>
+                        <th>تاريخ الميلاد</th>
+                        <td>@Model.person.dateOfBirth</td>
+                        <th>المحافظة</th>
+                        <td>@Model.person.region.regionName</td>
+                        <th>الرقم الوطني</th>
+                        <td>@Model.person.idNumber</td>
+                    </tr>
+                    <tr>
+                        <th>رقم المبايل</th>
+                        <td>@Model.person.mobile</td>
+                        <th>الهاتف</th>
+                        <td>@Model.person.phone</td>
+                        <th>الإيميل</th>
+                        <td colspan="3">@Model.person.emailAddress</td>
+                    </tr>
+                </table>
+                <div class="row">
+                    <div class="col-4">
+                        <img src="~/PersonImages/@Model.person.personImage" class="img-thumbnail" />
+                    </div>
+                    <div class="col-4">
+                        <img src="~/PersonImages/@Model.person.identityImageFront" class="img-thumbnail" />
+                    </div>
+                    <div class="col-4">
+                        <img src="~/PersonImages/@Model.person.identityImageBack" class="img-thumbnail" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row text-left">
+            <br />
+
+        </div>
+    </div>    
+    <form asp-action="Delete">
+        <input type="text" id="mess" name="mess" placeholder="سبب الحذف"/>
+        <input type="hidden" asp-for="id" />
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-action="Details" asp-controller="Issues" asp-route-id="@Model.realtyContract.id" class="btn btn-warning">رجوع</a>
+    </form>
+</div>

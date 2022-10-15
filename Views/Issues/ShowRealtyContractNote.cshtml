@@ -1,0 +1,48 @@
+﻿@model IEnumerable<CourtHouse.Models.RealtyContractNote>
+
+<div class="modal fade" id="ShowPopup">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                اسم المستخدم
+                            </th>
+                            <th>
+                                العملية
+                            </th>
+                            <th>
+                                التاريخ
+                            </th>
+                            <th>
+                                ملاحظة
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.user.UserName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.noteType)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.noteDate)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.note)
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

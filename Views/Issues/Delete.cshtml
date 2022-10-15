@@ -1,0 +1,22 @@
+﻿@model CourtHouse.Models.RealtyContract
+
+<div class="modal fade" id="ShowPopup">
+    <div class="modal-dialog">
+        <form asp-action="Delete">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>هل متأكد من حذف القضية</h3>
+                    <h5>يجب ان تكون القضية غير مدققة للحذف</h5>
+                    <h5>عند حذف قضية لا يمكن التراجع عن هذا الاجراء</h5>
+                </div>
+                <div class="modal-footer">
+                    <input type="hidden" asp-for="id" />
+                    @if (Model.id != "Error")
+                    { <input type="submit" value="Delete" class="btn btn-danger"/>}                    
+                    |<input type="button" value="Close" class="btn btn-success" data-dismiss="modal" />
+
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

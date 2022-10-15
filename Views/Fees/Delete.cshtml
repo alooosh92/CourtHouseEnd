@@ -1,0 +1,26 @@
+﻿@model CourtHouse.Models.Fees
+
+<div class="modal fade" id="EditeFees">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <form asp-action="Delete">
+                <div class="modal-body">
+                    <h2>هل أنت متأكد من حذف وصل الدفع </h2>
+                    <h5>لا يمكن حذف الوصل بحال كان مدقق</h5>
+                    <input type="text" id="mess" name="mess" placeholder="سبب الحذف" required size="60" />
+                </div>
+                <div class="modal-footer">
+                    <input type="hidden" asp-for="id" />
+                    <input type="hidden" asp-for="realtyContract.id" />
+                    @if (Model.id != "Error")
+                    {
+                        <input type="submit" value="Delete" class="btn btn-danger" />
+                    }
+                    |<input type="button" value="Close" class="btn btn-success" data-dismiss="modal" />   
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+

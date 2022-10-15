@@ -1,0 +1,66 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <UserSecretsId>aspnet-CourtHouse-C084055E-0A45-4497-9331-5258EF6B8DDA</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="wwwroot\NewFolder1\**" />
+    <Content Remove="wwwroot\NewFolder1\**" />
+    <EmbeddedResource Remove="wwwroot\NewFolder1\**" />
+    <None Remove="wwwroot\NewFolder1\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Chart.js" Version="2.9.3" />
+    <PackageReference Include="Emgu.CV" Version="4.5.5.4823" />
+    <PackageReference Include="Emgu.CV.Bitmap" Version="4.5.5.4823" />
+    <PackageReference Include="Emgu.CV.runtime.windows" Version="4.5.5.4823" />
+    <PackageReference Include="Emgu.CV.UI" Version="4.5.5.4823" />
+    <PackageReference Include="IdentityModel" Version="5.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="5.0.8" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.8" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="5.0.8" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.8" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer.Design" Version="1.1.6" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.8">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\CaseImage\" />
+    <Folder Include="wwwroot\FeesImages\" />
+    <Folder Include="wwwroot\FaceId\" />
+    <Folder Include="wwwroot\OfficialDocument\" />
+    <Folder Include="wwwroot\PersonImages\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Views\Realty\AddRealty.cshtml" />
+    <None Include="Views\Realty\Create.cshtml" />
+    <None Include="Views\Realty\Delete.cshtml" />
+    <None Include="Views\Realty\Details.cshtml" />
+    <None Include="Views\Realty\Edit.cshtml" />
+    <None Include="Views\Realty\Index.cshtml" />
+    <None Include="wwwroot\haarcascade_frontalface_alt.xml" />
+    <None Include="wwwroot\webcamjs\build.sh" />
+    <None Include="wwwroot\webcamjs\demos\shutter.ogg" />
+    <None Include="wwwroot\webcamjs\DOCS.md" />
+    <None Include="wwwroot\webcamjs\flash\com\adobe\images\BitString.as" />
+    <None Include="wwwroot\webcamjs\flash\com\adobe\images\JPGEncoder.as" />
+    <None Include="wwwroot\webcamjs\flash\com\adobe\images\PNGEncoder.as" />
+    <None Include="wwwroot\webcamjs\flash\mx\utils\Base64Encoder.as" />
+    <None Include="wwwroot\webcamjs\flash\Webcam.as" />
+    <None Include="wwwroot\webcamjs\flash\Webcam.fla" />
+    <None Include="wwwroot\webcamjs\LICENSE" />
+    <None Include="wwwroot\webcamjs\README.md" />
+    <None Include="wwwroot\webcamjs\webcam.js" />
+    <None Include="wwwroot\webcamjs\webcam.min.js" />
+    <None Include="wwwroot\webcamjs\webcam.swf" />
+  </ItemGroup>
+
+</Project>
